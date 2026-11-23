@@ -1,34 +1,8 @@
 # Note about the status of repo
-- This repo is slightly behind the released version, as I've moved on to work on version 2.0 in my dev branch, from which I released 1.2.0 and 1.2.1.
-
-# Johto focused expansion hack
-# Features:
-- Explore expanded Johto with new areas and biomes
-- Play through the traditional Pokémon adventure in the main game and experience learning multiple abilities in the postgame.
-- Various battle tempo improvements, such as combining stat up/drop messages into one, and playing them while the stat animation happens.
-- Main game and postgame battle facilities with Pokémon from all generations! Factory accessible after Gym 3!
-- Hidden Grottos, which contain rare items and Pokémon, resetting daily
-- Boss Pokemon, some legendary fights have multiple health bars and are more powerful, but you are guaranteed to catch them with any ball once defeated
-- Achievement system with over 100 trophies to chase, including milestone rewards!
-- 9 starters to choose from with new Mega Evolutions for starters that are missing them (Typhlosion, Meowscarada, Primarina)
-- Fresh new tileset for the entirety of Johto
-- Title Defense system: No longer will you face only the same champion at the end of E4.
-- All mega evolutions are available; megastones have been turned into type-generic stones.
-- Rocket Arcade, where you win money instead of BP
-- Multiple legendaries to find in the main game and postgame!
-- Fishing for items, including IV-raising feathers!
-- Many HGSS features, such as Cameron the Cameraman, Buena's password, Pokégear, and Rock Smashing for fossils, make their return!
-- Unique battle frame color for shiny Pokémon
-- Music resumes from where it left off after battles instead of starting over
-- Multiple pages of options to customize your playthrough style
-- Various quality of life features and gameplay feel improvements
-
-## Documentation
-
-All the hacks documentation, including the Pokédex, wild encounters, TMs/HMs, items, trainers, and ability data, can be found here.
-https://eemeliri.github.io/soulgold/
+- This repo contains personal modification to Soulgold.
 
 ## CREDITS
+- [Eemeliri] (https://github.com/Eemeliri/soulgold) for the original decomp romhack.
 - [HnS Dev Team](https://github.com/PokemonHnS-Development/pokemonHnS) for their amazing work!
 - [smithk200](https://github.com/smithk200/Gold-And-Silver-Gen-3-Decomp) for porting most of HnS to expansion!
 - Rafael Sanna for amazing custom mega sprites for typhlosion, primarina and meowscarada, mugshots for Kris, Archer and Ariana and mega follower sprites for starters!

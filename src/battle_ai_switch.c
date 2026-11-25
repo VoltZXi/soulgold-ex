@@ -207,6 +207,12 @@ u32 GetSwitchChance(enum ShouldSwitchScenario shouldSwitchScenario)
         return SHOULD_SWITCH_SEEDED_STATS_RAISED_PERCENTAGE;
     case SHOULD_SWITCH_INFATUATION:
         return SHOULD_SWITCH_INFATUATION_PERCENTAGE;
+    case SHOULD_SWITCH_INFATUATION_STAGE_1:
+        return SHOULD_SWITCH_INFATUATION_STAGE_1_PERCENTAGE;
+    case SHOULD_SWITCH_INFATUATION_STAGE_2:
+        return SHOULD_SWITCH_INFATUATION_STAGE_2_PERCENTAGE;
+    case SHOULD_SWITCH_INFATUATION_STAGE_3:
+        return SHOULD_SWITCH_INFATUATION_STAGE_3_PERCENTAGE;
     case SHOULD_SWITCH_HASBADODDS:
         return SHOULD_SWITCH_HASBADODDS_PERCENTAGE;
     case SHOULD_SWITCH_NATURAL_CURE_STRONG:
@@ -882,9 +888,28 @@ static bool32 ShouldSwitchIfBadlyStatused(enum BattlerId battler)
         // Infatuation
         if (gBattleMons[battler].volatiles.infatuation
             && !AiExpectsToFaintPlayer(battler)
-            && gAiLogicData->mostSuitableMonId[battler] != PARTY_SIZE
-            && RandomPercentage(RNG_AI_SWITCH_INFATUATION, GetSwitchChance(SHOULD_SWITCH_INFATUATION)))
-            return SetSwitchinAndSwitch(battler, PARTY_SIZE);
+            && gAiLogicData->mostSuitableMonId[battler] != PARTY_SIZE)
+        {
+            u32 infatuationSwitchChance;
+            switch (gBattleMons[battler].volatiles.infatuationCritStages)
+            {
+            case 0:
+                infatuationSwitchChance = GetSwitchChance(SHOULD_SWITCH_INFATUATION);
+                break;
+            case 1:
+                infatuationSwitchChance = GetSwitchChance(SHOULD_SWITCH_INFATUATION_STAGE_1);
+                break;
+            case 2:
+                infatuationSwitchChance = GetSwitchChance(SHOULD_SWITCH_INFATUATION_STAGE_2);
+                break;
+            default:
+                infatuationSwitchChance = GetSwitchChance(SHOULD_SWITCH_INFATUATION_STAGE_3);
+                break;
+            }
+            if (infatuationSwitchChance > 0
+                && RandomPercentage(RNG_AI_SWITCH_INFATUATION, infatuationSwitchChance))
+                return SetSwitchinAndSwitch(battler, PARTY_SIZE);
+        }
     }
 
     return FALSE;

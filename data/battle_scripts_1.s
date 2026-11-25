@@ -7792,6 +7792,15 @@ BattleScript_CuteCharmActivates::
 	call BattleScript_TryDestinyKnotTarget
 	return
 
+BattleScript_SeductionActivates::
+	waitstate
+	call BattleScript_AbilityPopUp
+	volatileanimation BS_TARGET, VOLATILE_INFATUATION
+	printstring STRINGID_PKMNFELLINLOVE
+	waitmessage B_WAIT_TIME_LONG
+	call BattleScript_TryDestinyKnotAttacker
+	return
+
 BattleScript_GooeyActivates::
 	statbuffchange BS_ATTACKER, STAT_CHANGE_ONLY_CHECKING, BattleScript_GooeyActivatesRet
 	waitstate

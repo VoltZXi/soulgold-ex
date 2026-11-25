@@ -671,11 +671,11 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
     [ABILITY_CUTE_CHARM] =
     {
         .name = _("Cute Charm"),
-        .description = COMPOUND_STRING("Infatuates on hit."),
-        .longDescription = COMPOUND_STRING("When hit by a move,\n"
-                                           "has a 30% chance\n"
-                                           "of infatuating the\n"
-                                           "attacker."),
+        .description = COMPOUND_STRING("Infatuates; softens contact."),
+        .longDescription = COMPOUND_STRING("Hits have a 30% chance to\n"
+                                           "infatuate the attacker.\n"
+                                           "Infatuated foes deal 1/3\n"
+                                           "less contact damage."),
         .aiRating = 2,
     },
 
@@ -5802,5 +5802,16 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
                                            "of Psychic Terrain."),
         .aiRating = 7,
         .breakable = TRUE,
+    },
+
+    [ABILITY_SEDUCTION] =
+    {
+        .name = _("Seduction"),
+        .description = COMPOUND_STRING("Infatuates; boosts attacks."),
+        .longDescription = COMPOUND_STRING("Attacks have a 30% chance\n"
+                                           "to infatuate the target.\n"
+                                           "Deals 20% more damage to\n"
+                                           "infatuated targets."),
+        .aiRating = 5,
     },
 };

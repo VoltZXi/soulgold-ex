@@ -5964,6 +5964,23 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
             BattleScriptCall(BattleScript_AbilityStatusEffectAtk);
             effect++;
         }
+        if (SearchTraits(battlerTraits, ABILITY_SEDUCTION)
+         && IsBattlerAlive(gBattlerTarget)
+         && !gBattleStruct->unableToUseMove
+         && IsBattlerTurnDamaged(gBattlerTarget, EXCLUDING_SUBSTITUTES)
+         && IsBattlerAlive(gBattlerAttacker)
+         && RandomPercentage(RNG_SEDUCTION, 30)
+         && !(gBattleMons[gBattlerTarget].volatiles.infatuation)
+         && !IsAbilityAndRecord(gBattlerTarget, ABILITY_OBLIVIOUS)
+         && !IsAbilityOnSide(gBattlerTarget, ABILITY_AROMA_VEIL))
+        {
+            gBattleMons[gBattlerTarget].volatiles.infatuation = INFATUATED_WITH(gBattlerAttacker);
+            gBattlerAbility = gBattlerAttacker;
+            gLastUsedAbility = ABILITY_SEDUCTION;
+            PushTraitStack(gBattlerAttacker, ABILITY_SEDUCTION);
+            BattleScriptCall(BattleScript_SeductionActivates);
+            effect++;
+        }
         if (SearchTraits(battlerTraits, ABILITY_PENDULUM)
          && !gBattleStruct->unableToUseMove)
         {
@@ -8689,6 +8706,10 @@ static inline u32 CalcMoveBasePowerAfterModifiers(struct BattleContext *ctx, u32
      && IsCustomAbilityDirectDamagingMove(move)
      && GetSpeciesBaseStatTotal(gBattleMons[battlerDef].species) > GetSpeciesBaseStatTotal(gBattleMons[battlerAtk].species))
         modifier = uq4_12_multiply(modifier, UQ_4_12(1.3));
+    if (SearchTraits(battlerTraits, ABILITY_SEDUCTION)
+     && gBattleMons[battlerDef].volatiles.infatuation
+     && IsCustomAbilityDirectDamagingMove(move))
+        modifier = uq4_12_multiply(modifier, UQ_4_12(1.2));
     for (u32 i = 0; i < MAX_MON_TRAITS; i++)
     {
         if (GetAteAbilityType(battlerTraits[i]) == moveType && gBattleStruct->battlerState[battlerAtk].ateBoost)
@@ -9745,6 +9766,14 @@ static inline uq4_12_t GetDefenderAbilitiesModifier(struct BattleContext *ctx)
         if (ctx->updateFlags)
             RecordAbilityBattle(ctx->battlerDef, ABILITY_AURA_GUARD);
         modifier = uq4_12_multiply(modifier, UQ_4_12(0.5));
+    }
+    if (SearchTraits(battlerTraits, ABILITY_CUTE_CHARM)
+     && gBattleMons[ctx->battlerAtk].volatiles.infatuation
+     && IsMoveMakingContact(ctx->battlerAtk, ctx->battlerDef, ctx->move))
+    {
+        if (ctx->updateFlags)
+            RecordAbilityBattle(ctx->battlerDef, ABILITY_CUTE_CHARM);
+        modifier = uq4_12_multiply(modifier, UQ_4_12(0.667));
     }
     if ((SearchTraits(battlerTraits, ABILITY_PUNK_ROCK) || SearchTraits(battlerTraits, ABILITY_RESONANCE))
      && IsSoundMove(ctx->move))

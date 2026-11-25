@@ -17256,7 +17256,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     #else
         .abilities = { ABILITY_OBLIVIOUS, ABILITY_NONE, ABILITY_HYDRATION },
     #endif
-        .innates = { ABILITY_CUTE_CHARM },
+        .innates = { ABILITY_CUTE_CRUSH },
 		.bodyColor = BODY_COLOR_PINK,
         .speciesName = _("Smoochum"),
         .cryId = CRY_SMOOCHUM,
@@ -17333,7 +17333,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     #else
         .abilities = { ABILITY_OBLIVIOUS, ABILITY_NONE, ABILITY_DRY_SKIN },
     #endif
-        .innates = { ABILITY_CUTE_CHARM, ABILITY_DANCER, ABILITY_OWN_TEMPO },
+        .innates = { ABILITY_CUTE_CRUSH, ABILITY_DANCER, ABILITY_OWN_TEMPO },
 		.bodyColor = BODY_COLOR_RED,
         .speciesName = _("Jynx"),
         .cryId = CRY_JYNX,

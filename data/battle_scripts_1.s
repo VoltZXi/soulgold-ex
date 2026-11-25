@@ -7792,7 +7792,7 @@ BattleScript_CuteCharmActivates::
 	call BattleScript_TryDestinyKnotTarget
 	return
 
-BattleScript_SeductionActivates::
+BattleScript_CuteCrushActivates::
 	waitstate
 	call BattleScript_AbilityPopUp
 	volatileanimation BS_TARGET, VOLATILE_INFATUATION

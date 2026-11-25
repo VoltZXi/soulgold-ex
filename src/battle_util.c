@@ -5964,21 +5964,21 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
             BattleScriptCall(BattleScript_AbilityStatusEffectAtk);
             effect++;
         }
-        if (SearchTraits(battlerTraits, ABILITY_SEDUCTION)
+        if (SearchTraits(battlerTraits, ABILITY_CUTE_CRUSH)
          && IsBattlerAlive(gBattlerTarget)
          && !gBattleStruct->unableToUseMove
          && IsBattlerTurnDamaged(gBattlerTarget, EXCLUDING_SUBSTITUTES)
          && IsBattlerAlive(gBattlerAttacker)
-         && RandomPercentage(RNG_SEDUCTION, 30)
+         && RandomPercentage(RNG_CUTE_CRUSH, 30)
          && !(gBattleMons[gBattlerTarget].volatiles.infatuation)
          && !IsAbilityAndRecord(gBattlerTarget, ABILITY_OBLIVIOUS)
          && !IsAbilityOnSide(gBattlerTarget, ABILITY_AROMA_VEIL))
         {
             gBattleMons[gBattlerTarget].volatiles.infatuation = INFATUATED_WITH(gBattlerAttacker);
             gBattlerAbility = gBattlerAttacker;
-            gLastUsedAbility = ABILITY_SEDUCTION;
-            PushTraitStack(gBattlerAttacker, ABILITY_SEDUCTION);
-            BattleScriptCall(BattleScript_SeductionActivates);
+            gLastUsedAbility = ABILITY_CUTE_CRUSH;
+            PushTraitStack(gBattlerAttacker, ABILITY_CUTE_CRUSH);
+            BattleScriptCall(BattleScript_CuteCrushActivates);
             effect++;
         }
         if (SearchTraits(battlerTraits, ABILITY_PENDULUM)
@@ -8706,10 +8706,20 @@ static inline u32 CalcMoveBasePowerAfterModifiers(struct BattleContext *ctx, u32
      && IsCustomAbilityDirectDamagingMove(move)
      && GetSpeciesBaseStatTotal(gBattleMons[battlerDef].species) > GetSpeciesBaseStatTotal(gBattleMons[battlerAtk].species))
         modifier = uq4_12_multiply(modifier, UQ_4_12(1.3));
-    if (SearchTraits(battlerTraits, ABILITY_SEDUCTION)
+    if (SearchTraits(battlerTraits, ABILITY_CUTE_CRUSH)
      && gBattleMons[battlerDef].volatiles.infatuation
      && IsCustomAbilityDirectDamagingMove(move))
-        modifier = uq4_12_multiply(modifier, UQ_4_12(1.2));
+    {
+        static const uq4_12_t sCuteCrushDamageModifiers[] =
+        {
+            UQ_4_12(1.075), // (0 crit stages)
+            UQ_4_12(1.15),  // (1 crit stage)
+            UQ_4_12(1.225), // (2 crit stages)
+            UQ_4_12(1.3),   // (3 crit stages)
+        };
+        u32 stages = min(gBattleMons[battlerDef].volatiles.infatuationCritStages, ARRAY_COUNT(sCuteCrushDamageModifiers) - 1);
+        modifier = uq4_12_multiply(modifier, sCuteCrushDamageModifiers[stages]);
+    }
     for (u32 i = 0; i < MAX_MON_TRAITS; i++)
     {
         if (GetAteAbilityType(battlerTraits[i]) == moveType && gBattleStruct->battlerState[battlerAtk].ateBoost)
@@ -9768,12 +9778,19 @@ static inline uq4_12_t GetDefenderAbilitiesModifier(struct BattleContext *ctx)
         modifier = uq4_12_multiply(modifier, UQ_4_12(0.5));
     }
     if (SearchTraits(battlerTraits, ABILITY_CUTE_CHARM)
-     && gBattleMons[ctx->battlerAtk].volatiles.infatuation
-     && IsMoveMakingContact(ctx->battlerAtk, ctx->battlerDef, ctx->move))
+     && gBattleMons[ctx->battlerAtk].volatiles.infatuation)
     {
+        static const uq4_12_t sCuteCharmDamageModifiers[] =
+        {
+            UQ_4_12(0.875), // (0 crit stages)
+            UQ_4_12(0.75),  // (1 crit stage)
+            UQ_4_12(0.625), // (2 crit stages)
+            UQ_4_12(0.5),   // (3 crit stages)
+        };
+        u32 stages = min(gBattleMons[ctx->battlerAtk].volatiles.infatuationCritStages, ARRAY_COUNT(sCuteCharmDamageModifiers) - 1);
         if (ctx->updateFlags)
             RecordAbilityBattle(ctx->battlerDef, ABILITY_CUTE_CHARM);
-        modifier = uq4_12_multiply(modifier, UQ_4_12(0.667));
+        modifier = uq4_12_multiply(modifier, sCuteCharmDamageModifiers[stages]);
     }
     if ((SearchTraits(battlerTraits, ABILITY_PUNK_ROCK) || SearchTraits(battlerTraits, ABILITY_RESONANCE))
      && IsSoundMove(ctx->move))

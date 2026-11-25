@@ -674,8 +674,8 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .description = COMPOUND_STRING("Infatuates; softens contact."),
         .longDescription = COMPOUND_STRING("Hits have a 30% chance to\n"
                                            "infatuate the attacker.\n"
-                                           "Infatuated foes deal 1/3\n"
-                                           "less contact damage."),
+                                           "Infatuated foes deal\n"
+                                           "less damage."),
         .aiRating = 2,
     },
 
@@ -5804,14 +5804,14 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .breakable = TRUE,
     },
 
-    [ABILITY_SEDUCTION] =
+    [ABILITY_CUTE_CRUSH] =
     {
-        .name = _("Seduction"),
+        .name = _("Cute Crush"),
         .description = COMPOUND_STRING("Infatuates; boosts attacks."),
         .longDescription = COMPOUND_STRING("Attacks have a 30% chance\n"
                                            "to infatuate the target.\n"
-                                           "Deals 20% more damage to\n"
-                                           "infatuated targets."),
+                                           "Deals more damage\n"
+                                           "to infatuated targets."),
         .aiRating = 5,
     },
 };

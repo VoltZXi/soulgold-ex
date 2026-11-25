@@ -209,7 +209,7 @@ extern const u8 BattleScript_ColorChangeActivates[];
 extern const u8 BattleScript_RoughSkinActivates[];
 extern const u8 BattleScript_IronBarbsActivates[];
 extern const u8 BattleScript_CuteCharmActivates[];
-extern const u8 BattleScript_SeductionActivates[];
+extern const u8 BattleScript_CuteCrushActivates[];
 extern const u8 BattleScript_AbilityStatusEffectAtk[];
 extern const u8 BattleScript_AbilityStatusEffectDef[];
 extern const u8 BattleScript_TirelessPreventsRecharge[];

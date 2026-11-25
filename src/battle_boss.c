@@ -807,6 +807,7 @@ static void ResetBossPhaseConditions(enum BattlerId battler, bool32 enteringLast
     gBattleMons[battler].volatiles.flinched = FALSE;
     gBattleMons[battler].volatiles.wrapped = FALSE;
     gBattleMons[battler].volatiles.infatuation = 0;
+    gBattleMons[battler].volatiles.infatuationCritStages = 0;
     gBattleMons[battler].volatiles.escapePrevention = FALSE;
     gBattleMons[battler].volatiles.leechSeed = 0;
     gBattleMons[battler].volatiles.perishSong = FALSE;

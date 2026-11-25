@@ -397,6 +397,7 @@ u32 CountBattlerStatIncreases(enum BattlerId battler, bool32 countEvasionAcc);
 bool32 BattlerHasCopyableChanges(enum BattlerId battler);
 bool32 ChangeTypeBasedOnTerrain(enum BattlerId battler);
 void RemoveConfusionStatus(enum BattlerId battler);
+void RemoveInfatuationStatus(enum BattlerId battler);
 u32 GetBattlerGender(enum BattlerId battler);
 bool32 AreBattlersOfOppositeGender(enum BattlerId battler1, enum BattlerId battler2);
 bool32 AreBattlersOfSameGender(enum BattlerId battler1, enum BattlerId battler2);

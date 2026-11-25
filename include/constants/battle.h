@@ -200,6 +200,7 @@ enum VolatileFlags
     F(VOLATILE_POWDER,                      powder,                        (u32, 1)) \
     F(VOLATILE_UNUSED,                      padding,                       (u32, 1)) \
     F(VOLATILE_INFATUATION,                 infatuation,                   (enum BattlerId, MAX_BITS(MAX_BATTLERS_COUNT))) \
+    F(VOLATILE_INFATUATION_CRIT_STAGES,     infatuationCritStages,         (u32, 3)) \
     F(VOLATILE_DEFENSE_CURL,                defenseCurl,                   (u32, 1)) \
     F(VOLATILE_TRANSFORMED,                 transformed,                   (u32, 1)) \
     F(VOLATILE_RAGE,                        rage,                          (u32, 1)) \

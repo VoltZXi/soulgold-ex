@@ -671,11 +671,10 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
     [ABILITY_CUTE_CHARM] =
     {
         .name = _("Cute Charm"),
-        .description = COMPOUND_STRING("Infatuates on contact."),
-        .longDescription = COMPOUND_STRING("When hit by a contact\n"
-                                           "move, has a 30% chance\n"
-                                           "of infatuating an\n"
-                                           "opposite-gender\n"
+        .description = COMPOUND_STRING("Infatuates on hit."),
+        .longDescription = COMPOUND_STRING("When hit by a move,\n"
+                                           "has a 30% chance\n"
+                                           "of infatuating the\n"
                                            "attacker."),
         .aiRating = 2,
     },

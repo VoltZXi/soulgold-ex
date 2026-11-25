@@ -446,6 +446,7 @@ static enum ItemEffect TryMentalHerb(enum BattlerId battler, ActivationTiming ti
     if (gBattleMons[battler].volatiles.infatuation)
     {
         gBattleMons[battler].volatiles.infatuation = 0;
+        gBattleMons[battler].volatiles.infatuationCritStages = 0;
         gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_MENTALHERBCURE_INFATUATION;
         StringCopy(gBattleTextBuff1, gStatusConditionString_LoveJpn);
         effect = ITEM_EFFECT_OTHER;

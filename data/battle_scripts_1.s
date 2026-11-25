@@ -5992,6 +5992,11 @@ BattleScript_MoveUsedIsInLoveCantAttack::
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
 
+BattleScript_MoveUsedIsInLoveCantAttackCritDebuff::
+	printstring STRINGID_PKMNINFATUATIONCRITDEBUFF
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
 BattleScript_NightmareTurnDmg::
 	printstring STRINGID_PKMNLOCKEDINNIGHTMARE
 	waitmessage B_WAIT_TIME_LONG

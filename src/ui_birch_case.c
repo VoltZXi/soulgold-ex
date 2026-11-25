@@ -137,7 +137,7 @@ struct MonChoiceData{ // This is the format used to define a mon, everything lef
 static const struct MonChoiceData sStarterChoices[9] = 
 {
     [BALL_TOP_FIRST]        = {SPECIES_CHESPIN, 5, 0},
-    [BALL_TOP_SECOND]       = {SPECIES_FENNEKIN, 5, 1},
+    [BALL_TOP_SECOND]       = {SPECIES_DRATINI, 5, 1},
     [BALL_MIDDLE_FIRST]     = {SPECIES_FROAKIE, 5, 2},
 
     [BALL_TOP_THIRD]        = {SPECIES_CHIKORITA, 5, 0},

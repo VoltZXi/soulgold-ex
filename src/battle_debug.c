@@ -1641,6 +1641,7 @@ static void UpdateBattlerValue(struct BattleDebugMenu *data)
         else
         {
             gBattleMons[data->battlerId].volatiles.infatuation = 0;
+            gBattleMons[data->battlerId].volatiles.infatuationCritStages = 0;
         }
         break;
     }

@@ -438,17 +438,25 @@ static enum CancelerResult CancelerInfatuation(struct BattleContext *ctx)
     if (gBattleMons[ctx->battlerAtk].volatiles.infatuation)
     {
         gBattleScripting.battler = gBattleMons[ctx->battlerAtk].volatiles.infatuation - 1;
-        if (!RandomPercentage(RNG_INFATUATION, 50))
+        if (RandomPercentage(RNG_INFATUATION, 33))
         {
-            BattleScriptCall(BattleScript_MoveUsedIsInLove);
-            return CANCELER_RESULT_BREAK;
-        }
-        else
-        {
-            BattleScriptPush(BattleScript_MoveUsedIsInLoveCantAttack);
+            if (gBattleMons[ctx->battlerAtk].volatiles.infatuationCritStages < 3)
+            {
+                gBattleMons[ctx->battlerAtk].volatiles.infatuationCritStages++;
+                BattleScriptPush(BattleScript_MoveUsedIsInLoveCantAttackCritDebuff);
+            }
+            else
+            {
+                BattleScriptPush(BattleScript_MoveUsedIsInLoveCantAttack);
+            }
             CancelMultiTurnMoves(ctx->battlerAtk, SKY_DROP_ATTACKCANCELER_CHECK);
             gBattlescriptCurrInstr = BattleScript_MoveUsedIsInLove;
             return CANCELER_RESULT_FAILURE;
+        }
+        else
+        {
+            BattleScriptCall(BattleScript_MoveUsedIsInLove);
+            return CANCELER_RESULT_BREAK;
         }
     }
     return CANCELER_RESULT_SUCCESS;

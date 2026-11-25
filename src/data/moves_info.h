@@ -3614,16 +3614,17 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
     {
         .name = COMPOUND_STRING("Constrict"),
         .description = COMPOUND_STRING(
-            "Constricts to inflict pain.\n"
+            "Constrict the foe 2 to 5 times\n"
             "May lower Speed."),
         .effect = EFFECT_HIT,
-        .power = 10,
+        .power = 15,
         .type = TYPE_NORMAL,
         .accuracy = 100,
-        .pp = 35,
+        .pp = 20,
         .target = TARGET_SELECTED,
         .priority = 0,
         .category = DAMAGE_CATEGORY_PHYSICAL,
+        .multiHit = TRUE,
         .makesContact = TRUE,
         .additionalEffects = ADDITIONAL_EFFECTS({
             .moveEffect = MOVE_EFFECT_SPD_MINUS_1,
@@ -5831,8 +5832,8 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
     {
         .name = COMPOUND_STRING("Attract"),
         .description = COMPOUND_STRING(
-            "Makes the opposite gender\n"
-            "less likely to attack."),
+            "Makes the target less\n"
+            "likely to attack."),
         .effect = EFFECT_ATTRACT,
         .power = 0,
         .type = TYPE_NORMAL,

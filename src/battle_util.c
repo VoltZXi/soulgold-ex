@@ -5431,9 +5431,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
          && IsBattlerAlive(gBattlerTarget)
          && (GetConfig(B_ABILITY_TRIGGER_CHANCE) >= GEN_4 ? RandomPercentage(RNG_CUTE_CHARM, 30) : RandomChance(RNG_CUTE_CHARM, 1, 3))
          && !(gBattleMons[gBattlerAttacker].volatiles.infatuation)
-         && AreBattlersOfOppositeGender(gBattlerAttacker, gBattlerTarget)
          && !IsAbilityAndRecord(gBattlerAttacker, ABILITY_OBLIVIOUS)
-         && !CanBattlerAvoidContactEffects(gBattlerAttacker, gBattlerTarget, move)
          && !IsAbilityOnSide(gBattlerAttacker, ABILITY_AROMA_VEIL))
         {
             gBattleMons[gBattlerAttacker].volatiles.infatuation = INFATUATED_WITH(gBattlerTarget);
@@ -10259,7 +10257,8 @@ s32 CalcCritChanceStage(struct BattleContext *ctx)
                     + GetHoldEffectCritChanceIncrease(ctx->battlerAtk)
                     + ((B_AFFECTION_MECHANICS == TRUE && GetBattlerAffectionHearts(ctx->battlerAtk) == AFFECTION_FIVE_HEARTS) ? 2 : 0)
                     + ((gAiLogicData->aiCalcInProgress ? AI_BATTLER_HAS_TRAIT(ctx->battlerAtk, ABILITY_SUPER_LUCK) : BattlerHasTrait(ctx->battlerAtk, ABILITY_SUPER_LUCK)) ? 1 : 0)
-                    + gBattleMons[ctx->battlerAtk].volatiles.bonusCritStages;
+                    + gBattleMons[ctx->battlerAtk].volatiles.bonusCritStages
+                    + gBattleMons[ctx->battlerDef].volatiles.infatuationCritStages;
         if (HasTrueshotAura(ctx->battlerAtk))
             critChance += 2;
         if (critChance >= ARRAY_COUNT(sCriticalHitOdds))
@@ -10297,7 +10296,8 @@ s32 CalcCritChanceStageGen1(struct BattleContext *ctx)
     s32 critChance = 0;
     enum Ability abilityDef = ABILITY_NONE;
     s32 moveCritStage = GetMoveCriticalHitStage(ctx->move);
-    s32 bonusCritStage = gBattleMons[ctx->battlerAtk].volatiles.bonusCritStages; // G-Max Chi Strike
+    s32 bonusCritStage = gBattleMons[ctx->battlerAtk].volatiles.bonusCritStages
+                       + gBattleMons[ctx->battlerDef].volatiles.infatuationCritStages; // G-Max Chi Strike & Infatuation
     u32 holdEffectCritStage = GetHoldEffectCritChanceIncrease(ctx->battlerAtk);
     u16 baseSpeed = GetSpeciesBaseSpeed(gBattleMons[ctx->battlerAtk].species);
 
@@ -11843,7 +11843,7 @@ enum ImmunityHealStatusOutcome TryImmunityAbilityHealStatus(enum BattlerId battl
         BattleScriptCall(BattleScript_AbilityCuredStatus);
         break;
     case IMMUNITY_INFATUATION_CLEARED:
-        gBattleMons[battler].volatiles.infatuation = 0;
+        RemoveInfatuationStatus(battler);
         BattleScriptCall(BattleScript_AbilityCuredStatus);
         break;
     case IMMUNITY_TAUNT_CLEARED:
@@ -12472,6 +12472,12 @@ void RemoveConfusionStatus(enum BattlerId battler)
 {
     gBattleMons[battler].volatiles.confusionTurns = 0;
     gBattleMons[battler].volatiles.infiniteConfusion = FALSE;
+}
+
+void RemoveInfatuationStatus(enum BattlerId battler)
+{
+    gBattleMons[battler].volatiles.infatuation = 0;
+    gBattleMons[battler].volatiles.infatuationCritStages = 0;
 }
 
 u32 GetBattlerGender(enum BattlerId battler)
@@ -13125,6 +13131,7 @@ bool32 ItemHealMonVolatile(enum BattlerId battler, enum Item itemId)
     {
         statusChanged = (gBattleMons[battler].volatiles.infatuation || gBattleMons[battler].volatiles.confusionTurns > 0 || gBattleMons[battler].volatiles.infiniteConfusion);
         gBattleMons[battler].volatiles.infatuation = 0;
+        gBattleMons[battler].volatiles.infatuationCritStages = 0;
         gBattleMons[battler].volatiles.confusionTurns = 0;
         gBattleMons[battler].volatiles.infiniteConfusion = FALSE;
     }
@@ -13132,6 +13139,7 @@ bool32 ItemHealMonVolatile(enum BattlerId battler, enum Item itemId)
     {
         statusChanged = !!gBattleMons[battler].volatiles.infatuation;
         gBattleMons[battler].volatiles.infatuation = 0;
+        gBattleMons[battler].volatiles.infatuationCritStages = 0;
     }
     else if (effect[3] & ITEM3_CONFUSION)
     {

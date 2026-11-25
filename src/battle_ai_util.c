@@ -3846,7 +3846,6 @@ bool32 AI_CanBeInfatuated(enum BattlerId battlerAtk, enum BattlerId battlerDef)
     if (gBattleMons[battlerDef].volatiles.infatuation
       || gAiLogicData->effectiveness[battlerAtk][battlerDef][gAiThinkingStruct->movesetIndex] == UQ_4_12(0.0)
       || AI_BATTLER_HAS_TRAIT(battlerDef, ABILITY_OBLIVIOUS)
-      || !AreBattlersOfOppositeGender(battlerAtk, battlerDef)
       || AI_IsAbilityOnSide(battlerDef, ABILITY_AROMA_VEIL))
         return FALSE;
     return TRUE;
